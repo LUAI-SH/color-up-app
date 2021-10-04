@@ -7,8 +7,8 @@ import {ThemeProvider} from 'styled-components';
 
 const theme = {
   fontSize: {
-    small: '1.5rem',
-    large: '4rem'
+    xsmall: '1.5rem',
+    small: '1.8rem'
   }
 }
 

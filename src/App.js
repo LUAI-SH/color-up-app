@@ -4,7 +4,7 @@ import palettes from './model/palettes';
 function App() {
   return (
     <div className="App">
-      <Palette palette={palettes[4]}/>
+      <Palette palettes={palettes}/>
     </div>
   );
 }

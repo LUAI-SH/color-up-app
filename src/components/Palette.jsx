@@ -1,7 +1,11 @@
-const Palette = () => {
+import ColorsBox from "./ColorsBox";
+
+const Palette = ({ palettes }) => {
+  const australiaPalette = palettes.find((palette) => palette.emoji === "🇦🇺");
   return (
     <article className="palette">
-      <div className="palette__colors"></div>
+      <h1>{australiaPalette.paletteName}</h1>
+      <ColorsBox colors={australiaPalette.colors}/>
     </article>
   );
 };

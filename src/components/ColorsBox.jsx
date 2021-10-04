@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import {CopyToClipboard} from 'react-copy-to-clipboard';
+
 
 const ColorsBox = ({ palettesData }) => {
   const australiaPalette = palettesData.find(
@@ -9,14 +11,19 @@ const ColorsBox = ({ palettesData }) => {
       <Colors>
         {australiaPalette.colors.map((colorDetails, index) => {
           return (
-            <Color key={index} color={colorDetails.color}>
-              <ContentWrapper>
-                <ButtonWrapper>
-                  <Button>copy</Button>
-                </ButtonWrapper>
-                <ColorName>{colorDetails.name}</ColorName>
-              </ContentWrapper>
-            </Color>
+            <CopyToClipboard text={colorDetails.color}>
+              <Color key={index} color={colorDetails.color}>
+                <ContentWrapper>
+                  <CopyButtonWrapper>
+                    <CopyButton>copy</CopyButton>
+                  </CopyButtonWrapper>
+                  <Footer>
+                    <ColorName>{colorDetails.name}</ColorName>
+                    <MoreButton>more</MoreButton>
+                  </Footer>
+                </ContentWrapper>
+              </Color>
+            </CopyToClipboard>
           );
         })}
       </Colors>
@@ -24,7 +31,18 @@ const ColorsBox = ({ palettesData }) => {
   );
 };
 
-const Button = styled.button`
+const MoreButton = styled.button`
+  text-transform: uppercase;
+  background: hsla(0, 0%, 100%, 0.3);
+  border: none;
+  color: hsl(0, 0%, 90%);
+  font-size: 1.5rem;
+  margin: 0;
+  padding: .75rem;
+`;
+
+
+const CopyButton = styled.button`
   text-transform: uppercase;
   background: none;
   border: 2px solid hsl(0, 0%, 90%);
@@ -33,7 +51,13 @@ const Button = styled.button`
   color: hsl(0, 0%, 90%);
 `;
 
-const ButtonWrapper = styled.div`
+const Footer = styled.footer`
+display: flex;
+justify-content: space-between;
+align-items: baseline;
+`
+
+const CopyButtonWrapper = styled.div`
   flex-grow: 2;
   width: 100%;
   display: flex; /* for centering */
@@ -49,7 +73,7 @@ const ColorName = styled.span`
   text-align: start;
   text-transform: uppercase;
   padding-left: 4px;
-  font-size: 1.5rem;
+  font-size: ${props => props.theme.fontSize.small};
 `;
 
 const ContentWrapper = styled.div`
@@ -65,7 +89,7 @@ const Color = styled.li`
   height: 25%;
 
   &:hover {
-    & ${ButtonWrapper} {
+    & ${CopyButtonWrapper} {
       visibility: visible;
       opacity:1;
     }
@@ -89,3 +113,4 @@ const Wrapper = styled.div`
 `;
 
 export default ColorsBox;
+

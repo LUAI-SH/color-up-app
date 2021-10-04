@@ -2,13 +2,22 @@ import React from "react";
 import ReactDOM from "react-dom";
 import reportWebVitals from "./reportWebVitals";
 import App from "./App";
-import GlobalStyle from './GlobalStyle'
+import GlobalStyle from './GlobalStyle';
+import {ThemeProvider} from 'styled-components';
 
+const theme = {
+  fontSize: {
+    small: '1.5rem',
+    large: '4rem'
+  }
+}
 
 ReactDOM.render(
   <React.StrictMode>
     <GlobalStyle />
-    <App />
+    <ThemeProvider theme={theme}>
+      <App />
+    </ThemeProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

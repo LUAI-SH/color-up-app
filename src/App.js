@@ -1,10 +1,13 @@
 import Palette from './components/Palette';
+import ColorsBox from './components/ColorsBox';
+
 import palettes from './model/palettes';
 
 function App() {
   return (
     <div className="App">
-      <Palette palettes={palettes}/>
+    <ColorsBox palettesData={palettes} />
+      {/* <Palette palettes={palettes}/> */}
     </div>
   );
 }

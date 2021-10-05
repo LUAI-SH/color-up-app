@@ -4,8 +4,8 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 
 const Color = ({ colorName, hslColor }) => {
   const [isCopied, setIsCopied] = useState(false);
-  let {h,s,l} = hslColor
-  const hslColorCSS = `hsl(${h}deg,${s}%,${l}%)`
+  let { h, s, l } = hslColor;
+  const hslColorCSS = `hsl(${h}deg,${s}%,${l}%)`;
 
   const handleOnCopy = () => {
     setIsCopied(true);
@@ -16,7 +16,7 @@ const Color = ({ colorName, hslColor }) => {
 
   return (
     <CopyToClipboard text={hslColorCSS} onCopy={handleOnCopy}>
-      <Wrapper backgroundColor={hslColorCSS}>
+      <Wrapper backgroundColor={hslColorCSS} lightness={l}>
         {isCopied && <Overlay backgroundColor={hslColorCSS} />}
         <Main>
           <Copy>{isCopied ? "copied" : "copy"}</Copy>
@@ -35,10 +35,10 @@ const MoreButton = styled.button`
   text-transform: uppercase;
   background: hsla(0, 0%, 100%, 0.3);
   border: none;
-  color: hsl(0, 0%, 90%);
   font-size: 1.5rem;
   margin: 0;
   padding: 0.75rem;
+  color: inherit;
 `;
 
 const Copy = styled.div`
@@ -47,7 +47,6 @@ const Copy = styled.div`
   border: 1px solid hsla(0, 0%, 90%, 0);
   border-radius: 4px;
   padding: 0.5rem 1rem;
-  color: hsl(0, 0%, 90%);
   font-size: ${(props) => props.theme.fontSize.xsmall};
   z-index: 50;
 `;
@@ -97,12 +96,13 @@ const Overlay = styled.div`
 
 const Wrapper = styled.li`
   position: relative;
-  background-color: ${(props) => props.backgroundColor }};
+  background-color: ${(props) => props.backgroundColor};
   width: 20%;
   height: 25%;
   display: flex;
   flex-direction: column;
-
+  color: ${(props) =>
+    props.lightness > 55 ? "hsl(0deg,0%,0%)" : "hsl(0deg,0%,100%)"};
   &:hover {
     & ${Main} {
       visibility: visible;

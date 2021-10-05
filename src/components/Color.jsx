@@ -1,12 +1,21 @@
-import styled from "styled-components";
+import { useState } from "react";
+import styled, { keyframes } from "styled-components";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
 const Color = ({ colorName, color }) => {
+  const [isCopied, setIsCopied] = useState(false);
+
+  const handleOnCopy = () => { 
+    setIsCopied(true);
+    setTimeout(() => {setIsCopied(false)}, 1000);
+  }
+
   return (
-    <CopyToClipboard text={color}>
+    <CopyToClipboard text={color} onCopy={handleOnCopy}>
       <Wrapper backgroundColor={color}>
+        {isCopied && <Overlay backgroundColor={color} />}
         <Main>
-          <Copy>copy</Copy>
+          <Copy>{isCopied ? 'copied' : 'copy'}</Copy>
         </Main>
         <Footer>
           <ColorName>{colorName}</ColorName>
@@ -33,15 +42,17 @@ const Copy = styled.div`
   background: hsla(0, 0%, 100%, 0.3);
   border: 1px solid hsla(0, 0%, 90%, 0);
   border-radius: 4px;
-  padding: .5rem 1rem;
+  padding: 0.5rem 1rem;
   color: hsl(0, 0%, 90%);
-  font-size: ${(props) => props.theme.fontSize.xsmall};;
+  font-size: ${(props) => props.theme.fontSize.xsmall}; 
+  z-index: 50;
 `;
 
 const Footer = styled.footer`
   display: flex;
   justify-content: space-between;
   align-items: baseline;
+  z-index: 50;
 `;
 
 const ColorName = styled.span`
@@ -63,7 +74,25 @@ const Main = styled.main`
   transition: visibility 0.2s linear, opacity 0.2s linear; ;
 `;
 
+const overlayAnimation = keyframes`
+ 0% { transform: scale(0.8); opacity: 0; }
+ 80% {transform: scale(1.2); opacity: 1;}
+ 100% { transform: scale(1.4); opacity: 0;}
+`;
+
+const Overlay = styled.div`
+  position: absolute;
+  inset: 0;
+  background-color: ${(props) => props.backgroundColor};
+  animation-name: ${overlayAnimation};
+  animation-duration: 0.3s;
+  z-index: 10;
+  opacity: 0;
+  /* animation-iteration-count: infinite; */
+`;
+
 const Wrapper = styled.li`
+  position: relative;
   background-color: ${(props) => props.backgroundColor};
   width: 20%;
   height: 25%;
@@ -77,4 +106,5 @@ const Wrapper = styled.li`
     }
   }
 `;
+
 export default Color;

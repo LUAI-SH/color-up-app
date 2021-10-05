@@ -1,28 +1,31 @@
 import { useState } from "react";
 import styled from "styled-components";
-import shortid from 'shortid';
+import shortid from "shortid";
 
 import Color from "./Color";
+import { generateShadeOfColor, hexToHSL } from "../helperFunction/colors";
 
 const ColorsBox = ({ palettesData }) => {
-  const [isCopied, setIsCopied] = useState(false)
+  const [isCopied, setIsCopied] = useState(false);
 
   const australiaPalette = palettesData.find(
     (palette) => palette.emoji === "🇦🇺"
   );
+
   return (
     <Wrapper>
       <Colors>
         {australiaPalette.colors.map((colorDetails) => {
-          return (
-              <Color colorName={colorDetails.name} color={colorDetails.color} />
-          );
+          const { name, color: hexColor } = colorDetails;
+          console.log(hexColor);
+          const hslColor = hexToHSL(hexColor);
+          /* console.log("HSL : ", hslColor); */
+          return <Color colorName={colorDetails.name} hslColor={hslColor} />;
         })}
       </Colors>
     </Wrapper>
   );
 };
-
 
 const Colors = styled.ul`
   list-style: none;

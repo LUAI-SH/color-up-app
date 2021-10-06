@@ -4,8 +4,6 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 
 const Color = ({ colorName, hslColor }) => {
   const [isCopied, setIsCopied] = useState(false);
-  let { h, s, l } = hslColor;
-  const hslColorCSS = `hsl(${h}deg,${s}%,${l}%)`;
 
   const handleOnCopy = () => {
     setIsCopied(true);
@@ -14,10 +12,12 @@ const Color = ({ colorName, hslColor }) => {
     }, 1000);
   };
 
+  console.log(`hslColor`, hslColor);
+
   return (
-    <CopyToClipboard text={hslColorCSS} onCopy={handleOnCopy}>
-      <Wrapper backgroundColor={hslColorCSS} lightness={l}>
-        {isCopied && <Overlay backgroundColor={hslColorCSS} />}
+    <CopyToClipboard text={hslColor.css} onCopy={handleOnCopy}>
+      <Wrapper backgroundColor={hslColor.css} lightness={hslColor.values.l}>
+        {isCopied && <Overlay backgroundColor={hslColor.css} />}
         <Main>
           <Copy>{isCopied ? "copied" : "copy"}</Copy>
         </Main>

@@ -1,26 +1,35 @@
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import shortid from "shortid";
+import Slider from "rc-slider";
+import "rc-slider/assets/index.css";
 
+//Context
+import PalettesContext from "../palettesContext";
+
+// Components
 import Color from "./Color";
-import { generateShadeOfColor, hexToHSL } from "../helperFunction/colors";
 
-const ColorsBox = ({ palettesData }) => {
-  const [isCopied, setIsCopied] = useState(false);
+const ColorsBox = () => {
+  const appPalettes = useContext(PalettesContext);
+  const [aussiePalette, setAussiePalette] = useState(null);
 
-  const australiaPalette = palettesData.find(
-    (palette) => palette.emoji === "🇦🇺"
-  );
+  useEffect(() => {
+    setAussiePalette(appPalettes.find((palette) => palette.emoji === "🇦🇺")); 
+  }, [aussiePalette, appPalettes]);
 
   return (
     <Wrapper>
+      <Slider />
       <Colors>
-        {australiaPalette.colors.map((colorDetails) => {
-          const { name, color: hexColor } = colorDetails;
-          console.log(hexColor);
-          const hslColor = hexToHSL(hexColor);
-          /* console.log("HSL : ", hslColor); */
-          return <Color colorName={colorDetails.name} hslColor={hslColor} />;
+        {aussiePalette && aussiePalette.colors.map((colorDetails) => {
+          return (
+            <Color
+              key={shortid.generate()}
+              colorName={colorDetails.name}
+              hslColor={colorDetails.color.hsl}
+            />
+          );
         })}
       </Colors>
     </Wrapper>

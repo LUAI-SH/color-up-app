@@ -42,3 +42,10 @@ function hexToHSL(hexColor) {
 }
 
 console.log(hexToHSL("#ffbe76"));
+
+<PalettesContext.Provider value={appPalettes}>
+  <div className="App">
+    <ColorsBox />
+    {/* <Palette palettes={palettes}/> */}
+  </div>
+</PalettesContext.Provider>;

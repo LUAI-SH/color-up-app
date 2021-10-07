@@ -1,13 +1,53 @@
+import { useState } from "react";
+import styled from "styled-components";
 import ColorsBox from "./ColorsBox";
+import ColorsBoxNav from "./ColorsBoxNav";
+//Context
+// import { PalettesContext } from "../appContexts";
 
-const Palette = ({ palettes }) => {
-  const australiaPalette = palettes.find((palette) => palette.emoji === "🇦🇺");
+const Palette = ({palette}) => {
+  const [sliderValue, setSliderValue] = useState(1);
+  const [colorFormat, setColorFormat] = useState("hex");
+  console.log(`palette`, palette);
+
+  if (!palette) {
+    return (
+      <h1>Loading.....</h1>
+    );
+  }
+
   return (
-    <article className="palette">
-      <h1>{australiaPalette.paletteName}</h1>
-      <ColorsBox colors={australiaPalette.colors}/>
-    </article>
+    <Wrapper>
+      <ColorsBoxNav
+        sliderValue={sliderValue}
+        colorFormat={colorFormat}
+        setSliderValue={setSliderValue}
+        setColorFormat={setColorFormat}
+      />
+      <ColorsBox colors= {palette.colors} sliderValue={sliderValue} colorFormat={colorFormat} />
+      <Footer>
+        <span>{palette && palette.paletteName}</span>
+        <Emoji>{palette && palette.emoji}</Emoji>
+      </Footer>
+    </Wrapper>
   );
 };
+
+const Emoji = styled.span`
+  margin: 0 1rem;
+  font-size: 2.5rem;
+`;
+
+const Footer = styled.footer`
+  display: flex;
+  justify-content: flex-end;
+`;
+
+const Wrapper = styled.div`
+  background-color: cyan; // Change later
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+`;
 
 export default Palette;

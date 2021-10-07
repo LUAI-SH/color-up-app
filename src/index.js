@@ -1,22 +1,25 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import {BrowserRouter} from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
 import App from "./App";
-import GlobalStyle from './GlobalStyle';
-import {ThemeProvider} from 'styled-components';
+import GlobalStyle from "./GlobalStyle";
+import { ThemeProvider } from "styled-components";
 
 const theme = {
   fontSize: {
-    xsmall: '1.5rem',
-    small: '1.8rem'
-  }
-}
+    xsmall: "1.5rem",
+    small: "1.8rem",
+  },
+};
 
 ReactDOM.render(
   <React.StrictMode>
     <GlobalStyle />
     <ThemeProvider theme={theme}>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </ThemeProvider>
   </React.StrictMode>,
   document.getElementById("root")

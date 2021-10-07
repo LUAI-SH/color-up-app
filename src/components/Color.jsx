@@ -1,9 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled, { keyframes } from "styled-components";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
-const Color = ({ colorName, hslColor }) => {
+const Color = ({ colorName, hslColor, sliderValue }) => {
   const [isCopied, setIsCopied] = useState(false);
+//   console.log(`hslColor`, hslColor);
+  let { h, s, l } = hslColor.values;
+  useEffect(() => {
+    // setAussiePalette(appPalettes.find((palette) => palette.emoji === "🇦🇺"));
+  }, []);
 
   const handleOnCopy = () => {
     setIsCopied(true);
@@ -12,12 +17,18 @@ const Color = ({ colorName, hslColor }) => {
     }, 1000);
   };
 
-  console.log(`hslColor`, hslColor);
-
   return (
-    <CopyToClipboard text={hslColor.css} onCopy={handleOnCopy}>
-      <Wrapper backgroundColor={hslColor.css} lightness={hslColor.values.l}>
-        {isCopied && <Overlay backgroundColor={hslColor.css} />}
+    <CopyToClipboard
+      text={`hsl(${h}deg,${s}%,${l * sliderValue}%)`}
+      onCopy={handleOnCopy}
+    >
+      <Wrapper
+        backgroundColor={`hsl(${h}deg,${s}%,${l * sliderValue}%)`}
+        lightness={hslColor.values.l * sliderValue}
+      >
+        {isCopied && (
+          <Overlay backgroundColor={`hsl(${h}deg,${s}%,${l * sliderValue}%)`} />
+        )}
         <Main>
           <Copy>{isCopied ? "copied" : "copy"}</Copy>
         </Main>

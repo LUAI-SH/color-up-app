@@ -1,36 +1,43 @@
 import { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import shortid from "shortid";
-import Slider from "rc-slider";
-import "rc-slider/assets/index.css";
 
 //Context
-import PalettesContext from "../palettesContext";
+import { PalettesContext } from "../appContexts";
 
 // Components
 import Color from "./Color";
+import ColorsBoxNav from "./ColorsBoxNav";
 
 const ColorsBox = () => {
   const appPalettes = useContext(PalettesContext);
   const [aussiePalette, setAussiePalette] = useState(null);
+  const [sliderValue, setSliderValue] = useState(1);
 
   useEffect(() => {
-    setAussiePalette(appPalettes.find((palette) => palette.emoji === "🇦🇺")); 
+    setAussiePalette(appPalettes.find((palette) => palette.emoji === "🇦🇺"));
   }, [aussiePalette, appPalettes]);
+
+  console.log(sliderValue);
 
   return (
     <Wrapper>
-      <Slider />
+      <ColorsBoxNav
+        sliderValue={sliderValue}
+        setSliderValue={setSliderValue}
+      />
       <Colors>
-        {aussiePalette && aussiePalette.colors.map((colorDetails) => {
-          return (
-            <Color
-              key={shortid.generate()}
-              colorName={colorDetails.name}
-              hslColor={colorDetails.color.hsl}
-            />
-          );
-        })}
+        {aussiePalette &&
+          aussiePalette.colors.map((colorDetails) => {
+            return (
+              <Color
+                key={shortid.generate()}
+                colorName={colorDetails.name}
+                hslColor={colorDetails.color.hsl}
+                sliderValue={sliderValue}
+              />
+            );
+          })}
       </Colors>
     </Wrapper>
   );
@@ -48,7 +55,7 @@ const Colors = styled.ul`
 `;
 
 const Wrapper = styled.div`
-  background-color: cyan;
+  background-color: cyan; // Change later
   height: 90vh;
   cursor: pointer;
 `;

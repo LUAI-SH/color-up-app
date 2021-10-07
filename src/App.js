@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 // Context
-import PalettesContext from "./palettesContext";
+import {PalettesContext} from "./appContexts";
 
 // Components
 import Palette from "./components/Palette";

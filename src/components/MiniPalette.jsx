@@ -70,15 +70,6 @@ const Wrapper = styled.div`
   align-items: center;
   padding: 10px;
   border-radius: 8px;
-  transition: all 0.2s;
-  border: 2px solid transparent;
-
-  &:hover {
-    border: 2px solid hsl(0deg, 0%, 50%);
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
-      rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
-    transform: scale(1.01);
-  }
 `;
 
 export default MiniPalette;

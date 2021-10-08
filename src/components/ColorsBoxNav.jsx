@@ -1,16 +1,24 @@
 import { useState } from "react";
-import {Link} from 'react-router-dom'
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import { Select, MenuItem } from "@mui/material";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 
-const ColorsBoxNav = ({ sliderValue, setSliderValue,colorFormat, setColorFormat }) => {
+const ColorsBoxNav = ({
+  sliderValue,
+  setSliderValue,
+  colorFormat,
+  setColorFormat,
+}) => {
   return (
     <Nav>
-      <div>
-        <Link to="/">{'<'}</Link>
-      </div>
+      <ArrowBackWrapper>
+        <Link to="/">
+          <ArrowBackIosNewIcon fontSize="large" />
+        </Link>
+      </ArrowBackWrapper>
       <SliderWrapper>
         <span>Brightness</span>
         <Slider
@@ -22,7 +30,11 @@ const ColorsBoxNav = ({ sliderValue, setSliderValue,colorFormat, setColorFormat 
         />
       </SliderWrapper>
       <div>
-        <Select label="Format" value={colorFormat} onChange={(e) => setColorFormat(e.target.value)}>
+        <Select
+          label="Format"
+          value={colorFormat}
+          onChange={(e) => setColorFormat(e.target.value)}
+        >
           <MenuItem value="hex">HEX</MenuItem>
           <MenuItem value="rgb">RGB</MenuItem>
           <MenuItem value="hsl">HSL</MenuItem>
@@ -34,8 +46,9 @@ const ColorsBoxNav = ({ sliderValue, setSliderValue,colorFormat, setColorFormat 
 
 // const Nav = styled.nav``;
 // const Nav = styled.nav``;
-// const Nav = styled.nav``;
-// const Nav = styled.nav``;
+const ArrowBackWrapper = styled.div`
+  
+`;
 
 const SliderWrapper = styled.div`
   width: 350px;

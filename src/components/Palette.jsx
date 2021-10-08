@@ -5,17 +5,14 @@ import ColorsBoxNav from "./ColorsBoxNav";
 //Context
 // import { PalettesContext } from "../appContexts";
 
-const Palette = ({palette}) => {
+const Palette = ({ palette }) => {
   const [sliderValue, setSliderValue] = useState(1);
   const [colorFormat, setColorFormat] = useState("hex");
   console.log(`palette`, palette);
 
   if (!palette) {
-    return (
-      <h1>Loading.....</h1>
-    );
+    return <h1>Loading.....</h1>;
   }
-
 
   return (
     <Wrapper>
@@ -25,7 +22,11 @@ const Palette = ({palette}) => {
         setSliderValue={setSliderValue}
         setColorFormat={setColorFormat}
       />
-      <ColorsBox colors= {palette.colors} sliderValue={sliderValue} colorFormat={colorFormat} />
+      <ColorsBox
+        colors={palette.colors}
+        sliderValue={sliderValue}
+        colorFormat={colorFormat}
+      />
       <Footer>
         <span>{palette && palette.paletteName}</span>
         <Emoji>{palette && palette.emoji}</Emoji>
@@ -45,10 +46,9 @@ const Footer = styled.footer`
 `;
 
 const Wrapper = styled.div`
-  background-color: cyan; // Change later
+  background-color: hsl(0deg, 0%, 90%); // Change later
   display: flex;
   flex-direction: column;
-  height: 100vh;
 `;
 
 export default Palette;

@@ -27,25 +27,35 @@ const GlobalStyle = createGlobalStyle`
   color: black;
   }
 
+  .rc-slider {
+    margin-bottom: 5px;
+  }
+
   .rc-slider-track {
     background-color: transparent;
   }
 
   .rc-slider-rail {
     height: 8px;
+    background-color: hsl(0deg,0%,75%);
   }
 
-  .rc-slider-handle,
-  .rc-slider-handle:active,
-  .rc-slider-handle:focus,
-  .rc-slider-handle:hover{
-    background-color: green;
+  .rc-slider-handle{
+    background-color: hsl(200deg,100%,35%);
     outline: none;
-    border: 2px solid green;
     box-shadow: none;
     width: 25px;
     height: 25px;
     margin-top: -9px;
+  }
+
+
+  .rc-slider-handle:active,
+  .rc-slider-handle:focus,
+  .rc-slider-handle:hover{
+    box-sizing: content-box;
+    border: 3px solid hsl(200deg,100%,75%);
+    top: 1px;
   }
 
 

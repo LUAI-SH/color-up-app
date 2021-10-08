@@ -5,7 +5,6 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 const Color = ({ colorName, hslColor, sliderValue }) => {
   const [isCopied, setIsCopied] = useState(false);
   let { h, s, l } = hslColor.values;
-  
 
   const handleOnCopy = () => {
     setIsCopied(true);
@@ -105,10 +104,11 @@ const Overlay = styled.div`
 const Wrapper = styled.li`
   position: relative;
   background-color: ${(props) => props.backgroundColor};
-  width: 20%;
-  height: 25%;
+  min-width: 180px;
+  min-height: 180px;
   display: flex;
   flex-direction: column;
+  cursor: pointer;
   color: ${(props) =>
     props.lightness > 55 ? "hsl(0deg,0%,0%)" : "hsl(0deg,0%,100%)"};
   &:hover {

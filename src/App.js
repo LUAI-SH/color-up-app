@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, useLocation } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
 
 // Context
 import { PalettesContext } from "./appContexts";
@@ -16,7 +17,8 @@ import { hexToHSL } from "./helperFunction/colors";
 
 function App() {
   const [appPalettes, setAppPalettes] = useState([]);
-
+  const location = useLocation();
+  console.log(`location`, location)
   const findPaletteById = (id) => {
     return appPalettes.find((palette) => palette.id === id);
   };
@@ -48,27 +50,29 @@ function App() {
     return;
   }, []);
 
-  if (!appPalettes | appPalettes.length === 0) {
+  if (!appPalettes | (appPalettes.length === 0)) {
     return <h1>Loading</h1>;
   }
 
-  console.log('App:',appPalettes);
+  console.log("App:", appPalettes);
 
   return (
-    <Switch>
-      <Route
-        exact
-        path="/"
-        render={() => <Home palettes={appPalettes} />}
-      ></Route>
-      <Route
-        exact
-        path="/palette/:id"
-        render={(routeProps) => (
-          <Palette palette={findPaletteById(routeProps.match.params.id)} />
-        )}
-      ></Route>
-    </Switch>
+    <AnimatePresence>
+      <Switch location={location} key={location.key}>
+        <Route
+          exact
+          path="/"
+          render={() => <Home palettes={appPalettes} />}
+        ></Route>
+        <Route
+          exact
+          path="/palette/:id"
+          render={(routeProps) => (
+            <Palette palette={findPaletteById(routeProps.match.params.id)} />
+          )}
+        ></Route>
+      </Switch>
+    </AnimatePresence>
   );
 }
 

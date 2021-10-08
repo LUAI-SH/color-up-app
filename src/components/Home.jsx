@@ -1,12 +1,39 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import shortid from "shortid";
+import { motion } from "framer-motion";
 
 import MiniPalette from "../components/MiniPalette";
 
+const variants = {
+  visible: {
+    opacity: 1,
+    x: "0vw",
+    transition: {
+      duration: 0.5,
+      ease: "easeIn",
+      type: "spring",
+    },
+  },
+  initial: { opacity: 0, x: "50vw" },
+  exit: {
+    x: "-100vw",
+    opacity: 0,
+    transition: {
+      ease: "easeOut",
+      duration: 0.7
+    },
+  },
+};
+
 const Home = ({ palettes }) => {
   return (
-    <Wrapper>
+    <Wrapper
+      variants={variants}
+      initial="initial"
+      animate="visible"
+      exit="exit"
+    >
       {palettes.map((palette) => {
         return (
           <Link key={shortid.generate()} to={`/palette/${palette.id}`}>
@@ -18,7 +45,7 @@ const Home = ({ palettes }) => {
   );
 };
 
-const Wrapper = styled.section`
+const Wrapper = styled(motion.section)`
   display: grid;
   grid-template-columns: auto;
   grid-template-rows: auto;

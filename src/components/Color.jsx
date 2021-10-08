@@ -4,11 +4,8 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 
 const Color = ({ colorName, hslColor, sliderValue }) => {
   const [isCopied, setIsCopied] = useState(false);
-//   console.log(`hslColor`, hslColor);
   let { h, s, l } = hslColor.values;
-  useEffect(() => {
-    // setAussiePalette(appPalettes.find((palette) => palette.emoji === "🇦🇺"));
-  }, []);
+  
 
   const handleOnCopy = () => {
     setIsCopied(true);

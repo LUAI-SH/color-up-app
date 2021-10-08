@@ -16,6 +16,7 @@ const Palette = ({palette}) => {
     );
   }
 
+
   return (
     <Wrapper>
       <ColorsBoxNav

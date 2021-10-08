@@ -6,6 +6,7 @@ import { PalettesContext } from "./appContexts";
 
 // Components
 import Palette from "./components/Palette";
+import Home from "./components/Home";
 
 // Model
 import palettes from "./model/palettes";
@@ -16,10 +17,9 @@ import { hexToHSL } from "./helperFunction/colors";
 function App() {
   const [appPalettes, setAppPalettes] = useState([]);
 
-
   const findPaletteById = (id) => {
     return appPalettes.find((palette) => palette.id === id);
-  }
+  };
 
   useEffect(() => {
     let _appPalettes = palettes;
@@ -48,13 +48,25 @@ function App() {
     return;
   }, []);
 
+  if (!appPalettes | appPalettes.length === 0) {
+    return <h1>Loading</h1>;
+  }
+
+  console.log('App:',appPalettes);
+
   return (
     <Switch>
-      <Route exact path="/" render={() => <h1>Home Page</h1>}></Route>
+      <Route
+        exact
+        path="/"
+        render={() => <Home palettes={appPalettes} />}
+      ></Route>
       <Route
         exact
         path="/palette/:id"
-        render={(routeProps) => <Palette palette={findPaletteById(routeProps.match.params.id)} />}
+        render={(routeProps) => (
+          <Palette palette={findPaletteById(routeProps.match.params.id)} />
+        )}
       ></Route>
     </Switch>
   );

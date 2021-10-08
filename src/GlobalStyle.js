@@ -24,6 +24,7 @@ const GlobalStyle = createGlobalStyle`
 
   a {
   text-decoration: none;
+  color: black;
   }
 
   .rc-slider-track {

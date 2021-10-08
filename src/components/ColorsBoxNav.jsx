@@ -1,4 +1,5 @@
 import { useState } from "react";
+import {Link} from 'react-router-dom'
 import styled from "styled-components";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
@@ -8,7 +9,7 @@ const ColorsBoxNav = ({ sliderValue, setSliderValue,colorFormat, setColorFormat 
   return (
     <Nav>
       <div>
-        <a href="#">Back</a>
+        <Link to="/">{'<'}</Link>
       </div>
       <SliderWrapper>
         <span>Brightness</span>

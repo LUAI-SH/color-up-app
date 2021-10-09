@@ -2,22 +2,37 @@ import { useState, useEffect } from "react";
 import styled, { keyframes } from "styled-components";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
-const Color = ({ colorName, hslColor, sliderValue }) => {
+import { hslToHex, hslToRgb } from "../helperFunction/colors";
+
+const Color = ({ colorName, hslColor, sliderValue, colorFormat }) => {
   const [isCopied, setIsCopied] = useState(false);
+  const [colorFormatCss, setColorFormatCss] = useState("");
   let { h, s, l } = hslColor.values;
 
   const handleOnCopy = () => {
     setIsCopied(true);
     setTimeout(() => {
       setIsCopied(false);
-    }, 1000);
+    }, 800);
   };
 
+  useEffect(() => {
+    console.log(`Color use EFFECT`);
+    switch (colorFormat) {
+      case "hex":
+        setColorFormatCss(hslToHex(h, s, l * sliderValue));
+        break;
+      case "rgb":
+        setColorFormatCss(hslToRgb(h, s, l * sliderValue));
+        break;
+      default:
+        setColorFormatCss(`hsl(${h}deg, ${s}%, ${l * sliderValue}%)`);
+        break;
+    }
+  }, [colorFormat, l]);
+
   return (
-    <CopyToClipboard
-      text={`hsl(${h}deg,${s}%,${l * sliderValue}%)`}
-      onCopy={handleOnCopy}
-    >
+    <CopyToClipboard text={colorFormatCss} onCopy={handleOnCopy}>
       <Wrapper
         backgroundColor={`hsl(${h}deg,${s}%,${l * sliderValue}%)`}
         lightness={hslColor.values.l * sliderValue}
@@ -29,8 +44,8 @@ const Color = ({ colorName, hslColor, sliderValue }) => {
           <Copy>{isCopied ? "copied" : "copy"}</Copy>
         </Main>
         <Footer>
-          <ColorName>{colorName}</ColorName>
-          <MoreButton>more</MoreButton>
+          <ColorMode>{colorFormatCss}</ColorMode>
+          {/* <MoreButton>more</MoreButton> */}
         </Footer>
       </Wrapper>
     </CopyToClipboard>
@@ -65,12 +80,12 @@ const Footer = styled.footer`
   z-index: 50;
 `;
 
-const ColorName = styled.span`
+const ColorMode = styled.span`
   display: block;
   text-align: start;
-  text-transform: uppercase;
   padding-left: 4px;
-  font-size: ${(props) => props.theme.fontSize.small};
+  font-size: 0.5rem;
+  font-size: ${(props) => props.theme.fontSize.xsmall};
 `;
 
 const Main = styled.main`

@@ -7,7 +7,7 @@ import ColorsBoxNav from "./ColorsBoxNav";
 
 const Palette = ({ palette }) => {
   const [sliderValue, setSliderValue] = useState(1);
-  const [colorFormat, setColorFormat] = useState("hex");
+  const [colorFormat, setColorFormat] = useState("hsl");
   console.log(`palette`, palette);
 
   if (!palette) {

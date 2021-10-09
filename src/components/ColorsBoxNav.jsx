@@ -37,9 +37,9 @@ const ColorsBoxNav = ({
             value={colorFormat}
             onChange={(e) => setColorFormat(e.target.value)}
           >
+            <MenuItem value="hsl">HSL</MenuItem>
             <MenuItem value="hex">HEX</MenuItem>
             <MenuItem value="rgb">RGB</MenuItem>
-            <MenuItem value="hsl">HSL</MenuItem>
           </Select>
         </FormControl>
       </SelectWrapper>

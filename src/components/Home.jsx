@@ -1,7 +1,11 @@
+import { useState, useEffect } from "react";
+
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import shortid from "shortid";
 import { motion } from "framer-motion";
+import BackgroundImage from "./images/home-background.svg";
+import { Alert, Snackbar } from "@mui/material";
 
 import MiniPalette from "../components/MiniPalette";
 
@@ -21,12 +25,20 @@ const variants = {
     opacity: 0,
     transition: {
       ease: "easeOut",
-      duration: 0.7
+      duration: 0.7,
     },
   },
 };
 
 const Home = ({ palettes }) => {
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setOpenSnackbar(true);
+    }, 4000);
+  }, []);
+
   return (
     <Wrapper
       variants={variants}
@@ -34,24 +46,70 @@ const Home = ({ palettes }) => {
       animate="visible"
       exit="exit"
     >
-      {palettes.map((palette) => {
-        return (
-          <Link key={shortid.generate()} to={`/palette/${palette.id}`}>
-            <MiniPalette palette={palette} />
-          </Link>
-        );
-      })}
+      <MaxWidth>
+        <Snackbar
+          anchorOrigin={{ vertical: "top", horizontal: "right" }}
+          open={openSnackbar}
+          message="Note archived"
+        >
+          <Alert
+            severity="info"
+            icon={false}
+            onClose={() => {
+              setOpenSnackbar(false);
+            }}
+            sx={{
+              bgcolor: "hsl(178deg, 2.1%, 30.9%)",
+              color: 'white',
+              boxShadow: 1,
+              fontSize: 14,
+              minWidth: 300,
+            }}
+          >
+            This application still under development.
+          </Alert>
+        </Snackbar>
+
+        <H1>palettes</H1>
+        <PaletteWrapper>
+          {palettes.map((palette) => {
+            return (
+              <Link key={shortid.generate()} to={`/palette/${palette.id}`}>
+                <MiniPalette palette={palette} />
+              </Link>
+            );
+          })}
+        </PaletteWrapper>
+      </MaxWidth>
     </Wrapper>
   );
 };
 
-const Wrapper = styled(motion.section)`
+const Notification = styled.div`
+  background-color: hsl(206deg, 97.4%, 54.7%);
+  color: white;
+  padding: 0.5rem 2rem;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  text-align: center;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+`;
+
+const H1 = styled.h1`
+  margin: 0;
+  margin-bottom: 1rem;
+  text-transform: capitalize;
+`;
+
+const PaletteWrapper = styled.section`
   display: grid;
   grid-template-columns: auto;
   grid-template-rows: auto;
-  justify-content: space-around;
+  justify-content: space-between;
   gap: 5rem;
-  background-color: red;
 
   @media only screen and (min-width: 600px) {
     grid-template-columns: auto auto;
@@ -71,11 +129,23 @@ const Wrapper = styled(motion.section)`
   }
 
   & > a:hover {
-    border: 2px solid hsl(0deg, 0%, 50%);
     box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
       rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
     transform: scale(1.01);
   }
+`;
+
+const MaxWidth = styled.div`
+  max-width: 1050px;
+  margin: 0 auto;
+`;
+
+const Wrapper = styled(motion.main)`
+  padding: 2rem 5rem;
+  height: 100%;
+  background: #efefbb; /* fallback for old browsers */
+  background: linear-gradient(35deg, #f857a6, #ff5858);
+  /* background-image: url(${BackgroundImage}); */
 `;
 
 export default Home;

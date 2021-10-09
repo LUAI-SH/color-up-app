@@ -18,7 +18,7 @@ import { hexToHSL } from "./helperFunction/colors";
 function App() {
   const [appPalettes, setAppPalettes] = useState([]);
   const location = useLocation();
-  console.log(`location`, location)
+  console.log(`location`, location);
   const findPaletteById = (id) => {
     return appPalettes.find((palette) => palette.id === id);
   };
@@ -71,6 +71,7 @@ function App() {
             <Palette palette={findPaletteById(routeProps.match.params.id)} />
           )}
         ></Route>
+        <Route render={() => <h3>404 - Not found</h3>} />
       </Switch>
     </AnimatePresence>
   );

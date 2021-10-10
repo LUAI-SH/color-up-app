@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import shortid from "shortid";
 import { motion } from "framer-motion";
-import BackgroundImage from "./images/home-background.svg";
+// import BackgroundImage from "./images/home-background.svg";
 import { Alert, Snackbar } from "@mui/material";
 
 import MiniPalette from "../components/MiniPalette";
@@ -60,7 +60,7 @@ const Home = ({ palettes }) => {
             }}
             sx={{
               bgcolor: "hsl(178deg, 2.1%, 30.9%)",
-              color: 'white',
+              color: "white",
               boxShadow: 1,
               fontSize: 14,
               minWidth: 300,
@@ -80,16 +80,37 @@ const Home = ({ palettes }) => {
             );
           })}
         </PaletteWrapper>
+        <Footer>
+          {'© Developed By '}
+          <a target="_blank" href="https://github.com/LUAI-SH/color-up-app">
+            luai-sh
+          </a>
+        </Footer>
       </MaxWidth>
     </Wrapper>
   );
 };
 
-
 const H1 = styled.h1`
   margin: 0;
   margin-bottom: 1rem;
   text-transform: capitalize;
+`;
+
+const Footer = styled.footer`
+  margin-top: 6rem;
+  margin-bottom: 6rem;
+  padding: 1rem;
+  border-radius: 6px;
+  background-color: black;
+  color: white;
+  height: auto;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  & a {
+    color: hsl(198deg, 73.5%, 54.1%);
+    text-decoration: underline;
+  }
 `;
 
 const PaletteWrapper = styled.section`
@@ -133,7 +154,6 @@ const Wrapper = styled(motion.main)`
   height: 100%;
   background: #efefbb; /* fallback for old browsers */
   background: linear-gradient(35deg, #f857a6, #ff5858);
-  /* background-image: url(${BackgroundImage}); */
 `;
 
 export default Home;

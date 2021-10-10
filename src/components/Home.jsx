@@ -82,7 +82,7 @@ const Home = ({ palettes }) => {
         </PaletteWrapper>
         <Footer>
           {'© Developed By '}
-          <a target="_blank" href="https://github.com/LUAI-SH/color-up-app">
+          <a target="_blank" href="https://github.com/LUAI-SH/color-up-app" rel="noreferrer">
             luai-sh
           </a>
         </Footer>

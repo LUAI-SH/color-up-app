@@ -1,9 +1,9 @@
-import { useState } from "react";
+// import { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
-import { FormControl, Select, MenuItem, InputLabel } from "@mui/material";
+import { FormControl, Select, MenuItem } from "@mui/material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 
 const ColorsBoxNav = ({

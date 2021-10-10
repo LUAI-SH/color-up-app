@@ -85,18 +85,6 @@ const Home = ({ palettes }) => {
   );
 };
 
-const Notification = styled.div`
-  background-color: hsl(206deg, 97.4%, 54.7%);
-  color: white;
-  padding: 0.5rem 2rem;
-  position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
-  text-align: center;
-  font-size: 1.5rem;
-  text-transform: uppercase;
-`;
 
 const H1 = styled.h1`
   margin: 0;

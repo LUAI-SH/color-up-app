@@ -4,7 +4,7 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 
 import { hslToHex, hslToRgb } from "../helperFunction/colors";
 
-const Color = ({ colorName, hslColor, sliderValue, colorFormat }) => {
+const Color = ({ hslColor, sliderValue, colorFormat }) => {
   const [isCopied, setIsCopied] = useState(false);
   const [colorFormatCss, setColorFormatCss] = useState("");
   let { h, s, l } = hslColor.values;
@@ -17,7 +17,6 @@ const Color = ({ colorName, hslColor, sliderValue, colorFormat }) => {
   };
 
   useEffect(() => {
-    console.log(`Color use EFFECT`);
     switch (colorFormat) {
       case "hex":
         setColorFormatCss(hslToHex(h, s, l * sliderValue));
@@ -29,7 +28,7 @@ const Color = ({ colorName, hslColor, sliderValue, colorFormat }) => {
         setColorFormatCss(`hsl(${h}deg, ${s}%, ${l * sliderValue}%)`);
         break;
     }
-  }, [colorFormat, l]);
+  },[colorFormat, h, s, l, sliderValue]);
 
   return (
     <CopyToClipboard text={colorFormatCss} onCopy={handleOnCopy}>
@@ -52,16 +51,16 @@ const Color = ({ colorName, hslColor, sliderValue, colorFormat }) => {
   );
 };
 
-const MoreButton = styled.button`
-  display: block;
-  text-transform: uppercase;
-  background: hsla(0, 0%, 100%, 0.3);
-  border: none;
-  font-size: 1.5rem;
-  margin: 0;
-  padding: 0.75rem;
-  color: inherit;
-`;
+// const MoreButton = styled.button`
+//   display: block;
+//   text-transform: uppercase;
+//   background: hsla(0, 0%, 100%, 0.3);
+//   border: none;
+//   font-size: 1.5rem;
+//   margin: 0;
+//   padding: 0.75rem;
+//   color: inherit;
+// `;
 
 const Copy = styled.div`
   text-transform: uppercase;

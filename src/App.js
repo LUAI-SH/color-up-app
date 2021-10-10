@@ -3,7 +3,7 @@ import { Route, Switch, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 
 // Context
-import { PalettesContext } from "./appContexts";
+// import { PalettesContext } from "./appContexts";
 
 // Components
 import Palette from "./components/Palette";
@@ -18,7 +18,6 @@ import { hexToHSL } from "./helperFunction/colors";
 function App() {
   const [appPalettes, setAppPalettes] = useState([]);
   const location = useLocation();
-  console.log(`location`, location);
   const findPaletteById = (id) => {
     return appPalettes.find((palette) => palette.id === id);
   };
@@ -54,7 +53,7 @@ function App() {
     return <h1>Loading</h1>;
   }
 
-  console.log("App:", appPalettes);
+  // console.log("App:", appPalettes);
 
   return (
     <AnimatePresence>

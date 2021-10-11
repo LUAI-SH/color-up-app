@@ -1,10 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import {BrowserRouter} from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
-import App from "./App";
 import GlobalStyle from "./GlobalStyle";
 import { ThemeProvider } from "styled-components";
+import App from "./App";
+// Context
+import { PalettesProvider } from "./appContexts";
 
 const theme = {
   fontSize: {
@@ -17,9 +19,11 @@ ReactDOM.render(
   <React.StrictMode>
     <GlobalStyle />
     <ThemeProvider theme={theme}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <PalettesProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </PalettesProvider>
     </ThemeProvider>
   </React.StrictMode>,
   document.getElementById("root")

@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { PalettesContext } from "../appContexts";
 
 import styled from "styled-components";
 import { Link } from "react-router-dom";
@@ -30,7 +31,8 @@ const variants = {
   },
 };
 
-const Home = ({ palettes }) => {
+const Home = () => {
+  const {palettesData} = useContext(PalettesContext);
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
   useEffect(() => {
@@ -38,6 +40,10 @@ const Home = ({ palettes }) => {
       setOpenSnackbar(true);
     }, 4000);
   }, []);
+
+  if (!palettesData | (palettesData.length === 0)) {
+    return <h1>Loading</h1>;
+  }
 
   return (
     <Wrapper
@@ -72,7 +78,7 @@ const Home = ({ palettes }) => {
 
         <H1>palettes</H1>
         <PaletteWrapper>
-          {palettes.map((palette) => {
+          {palettesData.map((palette) => {
             return (
               <Link key={shortid.generate()} to={`/palette/${palette.id}`}>
                 <MiniPalette palette={palette} />
@@ -81,8 +87,12 @@ const Home = ({ palettes }) => {
           })}
         </PaletteWrapper>
         <Footer>
-          {'© Developed By '}
-          <a target="_blank" href="https://github.com/LUAI-SH/color-up-app" rel="noreferrer">
+          {"© Developed By "}
+          <a
+            target="_blank"
+            href="https://github.com/LUAI-SH/color-up-app"
+            rel="noreferrer"
+          >
             luai-sh
           </a>
         </Footer>

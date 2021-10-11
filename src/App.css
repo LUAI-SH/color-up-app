@@ -1,3 +1,10 @@
 p {
-    background-image: linear-gradient(to bottom, hsl(0, 0%, 92%), hsl(0, 0%, 94%), hsl(0, 0%, 96%), hsl(0, 0%, 98%), hsl(0, 0%, 100%));
+  background-image: linear-gradient(
+    to bottom,
+    hsl(0, 0%, 92%),
+    hsl(0, 0%, 94%),
+    hsl(0, 0%, 96%),
+    hsl(0, 0%, 98%),
+    hsl(0, 0%, 100%)
+  );
 }

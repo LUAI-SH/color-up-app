@@ -1,10 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import styled, { keyframes } from "styled-components";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import { SliderContext } from "../appContexts";
 
 import { hslToHex, hslToRgb } from "../helperFunction/colors";
 
-const Color = ({ hslColor, sliderValue, colorFormat }) => {
+const Color = ({ hslColor, colorFormat }) => {
+  const { sliderValue } = useContext(SliderContext);
+
   const [isCopied, setIsCopied] = useState(false);
   const [colorFormatCss, setColorFormatCss] = useState("");
   let { h, s, l } = hslColor.values;
@@ -25,7 +28,7 @@ const Color = ({ hslColor, sliderValue, colorFormat }) => {
         setColorFormatCss(hslToRgb(h, s, l * sliderValue));
         break;
       default:
-        setColorFormatCss(`hsl(${h}deg, ${s}%, ${l * sliderValue}%)`);
+        setColorFormatCss(`hsl(${h}deg, ${s}%, ${(l * sliderValue).toFixed(2)}%)`);
         break;
     }
   },[colorFormat, h, s, l, sliderValue]);

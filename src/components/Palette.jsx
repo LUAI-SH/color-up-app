@@ -3,12 +3,10 @@ import styled from "styled-components";
 import ColorsBox from "./ColorsBox";
 import ColorsBoxNav from "./ColorsBoxNav";
 //Context
-// import { PalettesContext } from "../appContexts";
+import { SliderProvider } from "../appContexts";
 
 const Palette = ({ palette }) => {
-  const [sliderValue, setSliderValue] = useState(1);
   const [colorFormat, setColorFormat] = useState("hsl");
-  // console.log(`palette`, palette);
 
   if (!palette) {
     return <h1>Loading.....</h1>;
@@ -16,17 +14,16 @@ const Palette = ({ palette }) => {
 
   return (
     <Wrapper>
-      <ColorsBoxNav
-        sliderValue={sliderValue}
-        colorFormat={colorFormat}
-        setSliderValue={setSliderValue}
-        setColorFormat={setColorFormat}
-      />
-      <ColorsBox
-        colors={palette.colors}
-        sliderValue={sliderValue}
-        colorFormat={colorFormat}
-      />
+      <SliderProvider>
+        <ColorsBoxNav
+          colorFormat={colorFormat}
+          setColorFormat={setColorFormat}
+        />
+        <ColorsBox
+          colors={palette.colors}
+          colorFormat={colorFormat}
+        />
+      </SliderProvider>
       <Footer>
         <span>{palette && palette.paletteName}</span>
         <Emoji>{palette && palette.emoji}</Emoji>

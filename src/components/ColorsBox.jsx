@@ -1,11 +1,11 @@
-// import { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import shortid from "shortid";
 
 // Components
 import Color from "./Color";
 
-const ColorsBox = ({ colors , sliderValue, colorFormat }) => {
+const ColorsBox = ({ colors, colorFormat }) => {
+
   return (
     <Colors>
       {colors &&
@@ -15,7 +15,6 @@ const ColorsBox = ({ colors , sliderValue, colorFormat }) => {
               key={shortid.generate()}
               colorName={colorDetails.name}
               hslColor={colorDetails.color.hsl}
-              sliderValue={sliderValue}
               colorFormat={colorFormat}
             />
           );
@@ -37,15 +36,13 @@ const Colors = styled.ul`
   justify-content: flex-start;
   align-content: space-between;
 
-  @media only screen and (min-width: 678px){
+  @media only screen and (min-width: 678px) {
     grid-template-columns: 1fr 1fr 1fr;
-
   }
 
-  @media only screen and (min-width: 1200px){
+  @media only screen and (min-width: 1200px) {
     grid-template-columns: 1fr 1fr 1fr 1fr;
   }
-
 `;
 
 export default ColorsBox;

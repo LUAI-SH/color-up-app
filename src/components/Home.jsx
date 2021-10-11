@@ -32,7 +32,7 @@ const variants = {
 };
 
 const Home = () => {
-  const {palettesData} = useContext(PalettesContext);
+  const { palettesData } = useContext(PalettesContext);
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
   useEffect(() => {

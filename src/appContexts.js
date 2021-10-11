@@ -38,9 +38,8 @@ function PalettesProvider(props) {
     return;
   }, []);
 
-
   return (
-    <PalettesContext.Provider value={{palettesData, setPalettesData}}>
+    <PalettesContext.Provider value={{ palettesData, setPalettesData }}>
       {props.children}
     </PalettesContext.Provider>
   );
@@ -52,4 +51,13 @@ export { PalettesContext, PalettesProvider };
 const SliderContext = react.createContext();
 SliderContext.displayName = "SliderContext";
 
-export { SliderContext };
+function SliderProvider(props) {
+  const [sliderValue, setSliderValue] = useState(1);
+
+  return (
+    <SliderContext.Provider value={{ sliderValue, setSliderValue }}>
+      {props.children}
+    </SliderContext.Provider>
+  );
+}
+export { SliderContext, SliderProvider };

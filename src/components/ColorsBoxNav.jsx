@@ -1,17 +1,15 @@
-// import { useState } from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import { FormControl, Select, MenuItem } from "@mui/material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+// Context
+import { SliderContext } from "../appContexts";
 
-const ColorsBoxNav = ({
-  sliderValue,
-  setSliderValue,
-  colorFormat,
-  setColorFormat,
-}) => {
+const ColorsBoxNav = ({ colorFormat, setColorFormat }) => {
+  const { sliderValue, setSliderValue } = useContext(SliderContext);
   return (
     <Nav>
       <ArrowBackWrapper>
@@ -71,7 +69,7 @@ const SliderWrapper = styled.div`
 `;
 
 const Nav = styled.nav`
-  background-color: hsl(0deg, 0%, 90%); 
+  background-color: hsl(0deg, 0%, 90%);
   height: 70px;
   width: 100%;
   padding: 0 1rem;

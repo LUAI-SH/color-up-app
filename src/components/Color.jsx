@@ -20,15 +20,16 @@ const Color = ({ hslColor, colorFormat }) => {
   };
 
   useEffect(() => {
+    let lightness = (l * sliderValue) > 100 ? 100 : l * sliderValue 
     switch (colorFormat) {
       case "hex":
-        setColorFormatCss(hslToHex(h, s, l * sliderValue));
+        setColorFormatCss(hslToHex(h, s, lightness));
         break;
       case "rgb":
-        setColorFormatCss(hslToRgb(h, s, l * sliderValue));
+        setColorFormatCss(hslToRgb(h, s, lightness));
         break;
       default:
-        setColorFormatCss(`hsl(${h}deg, ${s}%, ${(l * sliderValue).toFixed(2)}%)`);
+        setColorFormatCss(`hsl(${h}deg, ${s}%, ${(lightness).toFixed()}%)`);
         break;
     }
   },[colorFormat, h, s, l, sliderValue]);

@@ -1,11 +1,14 @@
 import { useContext } from "react";
 import { Route, Switch, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
+
+// Context
 import { PalettesContext } from "./appContexts";
 
 // Components
 import Palette from "./components/Palette";
 import Home from "./components/Home";
+import CreatePalette from "./components/CreatePalette";
 
 function App() {
   const { palettesData } = useContext(PalettesContext);
@@ -20,6 +23,7 @@ function App() {
     <AnimatePresence>
       <Switch location={location} key={location.key}>
         <Route exact path="/" render={() => <Home />} />
+        <Route exact path="/create-palette" render={() => <CreatePalette />} />
         <Route
           exact
           path="/palette/:id"

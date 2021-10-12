@@ -6,7 +6,8 @@ import GlobalStyle from "./GlobalStyle";
 import { ThemeProvider } from "styled-components";
 import App from "./App";
 // Context
-import { PalettesProvider } from "./appContexts";
+
+import { Providers } from "./appContexts";
 
 const theme = {
   fontSize: {
@@ -19,11 +20,11 @@ ReactDOM.render(
   <React.StrictMode>
     <GlobalStyle />
     <ThemeProvider theme={theme}>
-      <PalettesProvider>
+      <Providers>
         <BrowserRouter>
           <App />
         </BrowserRouter>
-      </PalettesProvider>
+      </Providers>
     </ThemeProvider>
   </React.StrictMode>,
   document.getElementById("root")

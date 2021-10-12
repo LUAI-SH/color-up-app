@@ -67,7 +67,7 @@ const ColorFormatContext = react.createContext();
 ColorFormatContext.displayName = "ColorFormatContext";
 
 function ColorFormatProvider(props) {
-  const [colorFormat, setColorFormat] = useState('hsl');
+  const [colorFormat, setColorFormat] = useState("hsl");
 
   return (
     <ColorFormatContext.Provider value={{ colorFormat, setColorFormat }}>
@@ -76,3 +76,15 @@ function ColorFormatProvider(props) {
   );
 }
 export { ColorFormatContext, ColorFormatProvider };
+
+function Providers(props) {
+  return (
+    <PalettesProvider>
+      <ColorFormatProvider>
+        <SliderProvider>{props.children}</SliderProvider>
+      </ColorFormatProvider>
+    </PalettesProvider>
+  );
+}
+
+export { Providers };

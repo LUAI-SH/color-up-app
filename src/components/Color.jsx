@@ -21,7 +21,7 @@ const Color = ({ hslColor }) => {
   };
 
   useEffect(() => {
-    let lightness = (l * sliderValue) > 100 ? 100 : l * sliderValue 
+    let lightness = l * sliderValue > 100 ? 100 : l * sliderValue;
     switch (colorFormat) {
       case "hex":
         setColorFormatCss(hslToHex(h, s, lightness));
@@ -30,10 +30,10 @@ const Color = ({ hslColor }) => {
         setColorFormatCss(hslToRgb(h, s, lightness));
         break;
       default:
-        setColorFormatCss(`hsl(${h}deg, ${s}%, ${(lightness).toFixed()}%)`);
+        setColorFormatCss(`hsl(${h}deg, ${s}%, ${lightness.toFixed()}%)`);
         break;
     }
-  },[colorFormat, h, s, l, sliderValue]);
+  }, [colorFormat, h, s, l, sliderValue]);
 
   return (
     <CopyToClipboard text={colorFormatCss} onCopy={handleOnCopy}>

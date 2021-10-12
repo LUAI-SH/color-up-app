@@ -2,7 +2,6 @@ import styled from "styled-components";
 import ColorsBox from "./ColorsBox";
 import ColorsBoxNav from "./ColorsBoxNav";
 //Context
-import { SliderProvider } from "../appContexts";
 import { ColorFormatProvider } from "../appContexts";
 
 const Palette = ({ palette }) => {
@@ -13,10 +12,8 @@ const Palette = ({ palette }) => {
   return (
     <Wrapper>
       <ColorFormatProvider>
-        <SliderProvider>
           <ColorsBoxNav />
           <ColorsBox colors={palette.colors} />
-        </SliderProvider>
       </ColorFormatProvider>
       <Footer>
         <span>{palette && palette.paletteName}</span>

@@ -1,12 +1,13 @@
 import { useState, useEffect, useContext } from "react";
 import styled, { keyframes } from "styled-components";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import { SliderContext } from "../appContexts";
+import { SliderContext, ColorFormatContext } from "../appContexts";
 
 import { hslToHex, hslToRgb } from "../helperFunction/colors";
 
-const Color = ({ hslColor, colorFormat }) => {
+const Color = ({ hslColor }) => {
   const { sliderValue } = useContext(SliderContext);
+  const { colorFormat } = useContext(ColorFormatContext);
 
   const [isCopied, setIsCopied] = useState(false);
   const [colorFormatCss, setColorFormatCss] = useState("");

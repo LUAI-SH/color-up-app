@@ -61,3 +61,18 @@ function SliderProvider(props) {
   );
 }
 export { SliderContext, SliderProvider };
+
+// ColorFormatContext
+const ColorFormatContext = react.createContext();
+ColorFormatContext.displayName = "ColorFormatContext";
+
+function ColorFormatProvider(props) {
+  const [colorFormat, setColorFormat] = useState('hsl');
+
+  return (
+    <ColorFormatContext.Provider value={{ colorFormat, setColorFormat }}>
+      {props.children}
+    </ColorFormatContext.Provider>
+  );
+}
+export { ColorFormatContext, ColorFormatProvider };

@@ -4,7 +4,7 @@ import shortid from "shortid";
 // Components
 import Color from "./Color";
 
-const ColorsBox = ({ colors, colorFormat }) => {
+const ColorsBox = ({ colors }) => {
 
   return (
     <Colors>
@@ -15,7 +15,6 @@ const ColorsBox = ({ colors, colorFormat }) => {
               key={shortid.generate()}
               colorName={colorDetails.name}
               hslColor={colorDetails.color.hsl}
-              colorFormat={colorFormat}
             />
           );
         })}

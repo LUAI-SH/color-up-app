@@ -1,29 +1,23 @@
-import { useState } from "react";
 import styled from "styled-components";
 import ColorsBox from "./ColorsBox";
 import ColorsBoxNav from "./ColorsBoxNav";
 //Context
 import { SliderProvider } from "../appContexts";
+import { ColorFormatProvider } from "../appContexts";
 
 const Palette = ({ palette }) => {
-  const [colorFormat, setColorFormat] = useState("hsl");
-
   if (!palette) {
     return <h1>Loading.....</h1>;
   }
 
   return (
     <Wrapper>
-      <SliderProvider>
-        <ColorsBoxNav
-          colorFormat={colorFormat}
-          setColorFormat={setColorFormat}
-        />
-        <ColorsBox
-          colors={palette.colors}
-          colorFormat={colorFormat}
-        />
-      </SliderProvider>
+      <ColorFormatProvider>
+        <SliderProvider>
+          <ColorsBoxNav />
+          <ColorsBox colors={palette.colors} />
+        </SliderProvider>
+      </ColorFormatProvider>
       <Footer>
         <span>{palette && palette.paletteName}</span>
         <Emoji>{palette && palette.emoji}</Emoji>

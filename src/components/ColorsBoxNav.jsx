@@ -6,10 +6,12 @@ import "rc-slider/assets/index.css";
 import { FormControl, Select, MenuItem } from "@mui/material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 // Context
-import { SliderContext } from "../appContexts";
+import { SliderContext, ColorFormatContext } from "../appContexts";
 
-const ColorsBoxNav = ({ colorFormat, setColorFormat }) => {
+const ColorsBoxNav = () => {
   const { sliderValue, setSliderValue } = useContext(SliderContext);
+  const { colorFormat, setColorFormat } = useContext(ColorFormatContext);
+  
   return (
     <Nav>
       <ArrowBackWrapper>

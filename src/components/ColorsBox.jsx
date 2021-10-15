@@ -1,3 +1,4 @@
+import { memo } from "react";
 import styled from "styled-components";
 import shortid from "shortid";
 
@@ -5,7 +6,6 @@ import shortid from "shortid";
 import Color from "./Color";
 
 const ColorsBox = ({ colors }) => {
-
   return (
     <Colors>
       {colors &&
@@ -44,4 +44,4 @@ const Colors = styled.ul`
   }
 `;
 
-export default ColorsBox;
+export default memo(ColorsBox);

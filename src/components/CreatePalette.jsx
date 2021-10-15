@@ -1,38 +1,46 @@
 import { useContext, useEffect, useState } from "react";
-import {
-  AppBar,
-  Box,
-  CssBaseline,
-  Divider,
-  Drawer,
-  IconButton,
-  List,
-  Toolbar,
-} from "@mui/material";
+import styled from "styled-components";
+import { IconButton, Button } from "@mui/material";
 
 import MenuIcon from "@mui/icons-material/Menu";
 import { HslColorPicker } from "react-colorful";
 
-import { hslToHex } from "../helperFunction/colors";
-import ColorsBox from "./ColorsBox";
+import { hslToHex, hexToHSL } from "../helperFunction/colors";
+import DraggableColorsBox from "./DraggableColorsBox";
 
 // Context
 import { PalettesContext } from "../appContexts";
 
-const drawerWidth = 240;
-
 const CreatePalette = () => {
   const { palettesData } = useContext(PalettesContext);
-  const [colors, setColors] = useState(null);
+  const [colorsList, setColorsList] = useState([]);
+  let [colorFromPicker, setColorFromPicker] = useState({
+    h: 180,
+    s: 32,
+    l: 36,
+  });
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  useEffect(() => {
+    if (palettesData.length !== 0) {
+      setColorsList(palettesData[0].colors);
+    }
+  }, [palettesData]);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
-  const handleColorPickerChange = (color) => {
-    const { h, s, l } = color;
+  const handleAddColor = () => {
+    const { h, s, l } = colorFromPicker;
     const hexValue = hslToHex(h, s, l);
+    const colorExist = colorsList.filter(
+      (color) => color.color.hex === hexValue
+    );
+    if ((colorExist.length > 0) | (colorsList.length >= 20)) {
+      return;
+    }
+
     const newColor = {
       name: "",
       color: {
@@ -40,101 +48,126 @@ const CreatePalette = () => {
         hsl: { css: `hsl(${h}deg, ${s}%, ${l}%)`, values: { h, s, l } },
       },
     };
-    setColors([...colors, newColor]);
+    setColorsList([...colorsList, newColor]);
   };
 
-  useEffect(() => {
-    if (palettesData.length !== 0) {
-      setColors(palettesData[0].colors);
+  const handleAddRandomColor = () => {
+    const hexRandomColor = `#${Math.floor(Math.random() * 16777215).toString(
+      16
+    )}`;
+    const { h, s, l } = hexToHSL(hexRandomColor);
+    const colorExist = colorsList.filter(
+      (color) => color.color.hex === hexRandomColor
+    );
+    if ((colorExist.length > 0) | (colorsList.length >= 20)) {
+      return;
     }
-  }, [palettesData]);
+    const newRandomColor = {
+      name: "",
+      color: {
+        hex: hexRandomColor,
+        hsl: { css: `hsl(${h}deg, ${s}%, ${l}%)`, values: { h, s, l } },
+      },
+    };
+    setColorsList([...colorsList, newRandomColor]);
+  };
 
-  const drawer = (
-    <div>
-      <Toolbar />
-      <Divider />
-      <HslColorPicker onChange={handleColorPickerChange} />
-      <List>
-        <p>jvbjnv</p>
-      </List>
-    </div>
-  );
-
-  if (!colors) {
+  if (palettesData.length === 0) {
     return <h1>Loading.....</h1>;
   }
-  console.log(colors);
+
+  console.log("Re Rendered");
 
   return (
-    <div>
-      <div>
-        <Box sx={{ display: "flex" }}>
-          <CssBaseline />
-          <AppBar
-            position="static"
-            sx={{
-              width: { sm: `calc(100% - ${drawerWidth}px)` },
-              mr: { sm: `${drawerWidth}px` },
-            }}
-          >
-            <Toolbar>
-              <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                edge="start"
-                onClick={handleDrawerToggle}
-                sx={{ mr: 2, display: { sm: "none" } }}
-              >
-                <MenuIcon />
-              </IconButton>
-            </Toolbar>
-          </AppBar>
-          <Box
-            component="nav"
-            sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-            aria-label="mailbox folders"
-          >
-            {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-            <Drawer
-              anchor="right"
-              variant="temporary"
-              open={mobileOpen}
-              onClose={handleDrawerToggle}
-              ModalProps={{
-                keepMounted: true, // Better open performance on mobile.
-              }}
-              sx={{
-                display: { xs: "block", sm: "none" },
-                "& .MuiDrawer-paper": {
-                  boxSizing: "border-box",
-                  width: drawerWidth,
-                },
-              }}
+    <Wrapper>
+      <Bar>
+        <IconButton color="inherit" edge="start">
+          {"<"}
+        </IconButton>
+        <p>{colorsList.length} / 20</p>
+        <Button variant="contained" disabled={colorsList.length === 0}>
+          Save
+        </Button>
+      </Bar>
+      <Colors>
+        <DraggableColorsBox
+          colorsList={colorsList}
+          setColorsList={setColorsList}
+        />
+      </Colors>
+      <DrawerWrapper>
+        <Drawer>
+          <h2>🎨</h2>
+          <HslColorPicker
+            color={colorFromPicker}
+            onChange={setColorFromPicker}
+          />
+          <Button variant="contained" onClick={handleAddColor}>
+            Add Color
+          </Button>
+          <div>
+            <Button
+              variant="contained"
+              onClick={() => setColorsList([])}
+              disabled={colorsList.length === 0}
             >
-              {drawer}
-            </Drawer>
-            <Drawer
-              anchor="right"
-              variant="permanent"
-              sx={{
-                display: { xs: "none", sm: "block" },
-                "& .MuiDrawer-paper": {
-                  boxSizing: "border-box",
-                  width: drawerWidth,
-                },
-              }}
-              open
-            >
-              {drawer}
-            </Drawer>
-          </Box>
-        </Box>
-      </div>
-      <div>
-        <ColorsBox colors={colors} />
-      </div>
-    </div>
+              Clear Palette
+            </Button>
+            <Button variant="contained" onClick={handleAddRandomColor}>
+              Random Color
+            </Button>
+          </div>
+        </Drawer>
+      </DrawerWrapper>
+    </Wrapper>
   );
 };
+
+const Drawer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+`;
+
+const DrawerWrapper = styled.section`
+  background-color: hsl(0deg, 0%, 95%);
+  grid-area: drawer;
+  order: 2;
+`;
+
+const Bar = styled.section`
+  background-color: hsl(0deg, 0%, 95%);
+  grid-area: Bar;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+  @media only screen and (max-width: 677px) {
+    height: 60px;
+  }
+`;
+
+const Colors = styled.section`
+  grid-area: colors;
+`;
+
+const Wrapper = styled.div`
+  background-color: hsl(0deg, 0%, 80%);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+
+  @media only screen and (min-width: 678px) {
+    display: grid;
+    grid-template-columns: 1fr 1fr 300px;
+    grid-template-rows: 60px 1fr 1fr;
+    grid-template-areas:
+      "Bar Bar drawer"
+      "colors colors drawer"
+      "colors colors drawer";
+  }
+`;
 
 export default CreatePalette;

@@ -10,10 +10,12 @@ import DraggableColorsBox from "./DraggableColorsBox";
 
 // Context
 import { PalettesContext } from "../appContexts";
+// Hooks
+import useLocalStorageState from "./hooks/useLocalStorageState";
 
 const CreatePalette = () => {
   const { palettesData } = useContext(PalettesContext);
-  const [colorsList, setColorsList] = useState([]);
+  const [colorsList, setColorsList] = useLocalStorageState("colorsList", []);
   let [colorFromPicker, setColorFromPicker] = useState({
     h: 180,
     s: 32,
@@ -22,10 +24,14 @@ const CreatePalette = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
+    if (colorsList.length !== 0) {
+      return;
+    }
     if (palettesData.length !== 0) {
       setColorsList(palettesData[0].colors);
+      return;
     }
-  }, [palettesData]);
+  }, [palettesData, colorsList]);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -77,7 +83,7 @@ const CreatePalette = () => {
   }
 
   console.log("Re Rendered");
-
+  // return <p>dfvfdsvfdv</p>;
   return (
     <Wrapper>
       <Bar>

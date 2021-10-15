@@ -1,27 +1,51 @@
 import { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import Modal from "@mui/material/Modal";
+
 import styled from "styled-components";
 import { IconButton, Button } from "@mui/material";
 
-import MenuIcon from "@mui/icons-material/Menu";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import { HslColorPicker } from "react-colorful";
 
 import { hslToHex, hexToHSL } from "../helperFunction/colors";
 import DraggableColorsBox from "./DraggableColorsBox";
+
+import {Palette} from '../model/palette';
 
 // Context
 import { PalettesContext } from "../appContexts";
 // Hooks
 import useLocalStorageState from "./hooks/useLocalStorageState";
 
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
+
 const CreatePalette = () => {
-  const { palettesData } = useContext(PalettesContext);
+  const { palettesData, setPalettesData } = useContext(PalettesContext);
   const [colorsList, setColorsList] = useLocalStorageState("colorsList", []);
   let [colorFromPicker, setColorFromPicker] = useState({
     h: 180,
     s: 32,
     l: 36,
   });
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [duplicateName, setDuplicateName] = useState(false);
+  const [userInput, setUserInput] = useState("");
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   useEffect(() => {
     if (colorsList.length !== 0) {
@@ -33,8 +57,14 @@ const CreatePalette = () => {
     }
   }, [palettesData, colorsList]);
 
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
+  const handleSavePalette = () => {
+    const duplication = palettesData.filter(
+      (palette) => palette.paletteName === userInput
+    );
+    if (duplication.length === 0) {
+     const newPalette = new Palette(userInput, colorsList);
+     setPalettesData([...palettesData, newPalette]);
+    }
   };
 
   const handleAddColor = () => {
@@ -86,12 +116,38 @@ const CreatePalette = () => {
   // return <p>dfvfdsvfdv</p>;
   return (
     <Wrapper>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <TextField
+            id="standard-basic"
+            label="Name"
+            variant="standard"
+            onChange={(e) => setUserInput(e.target.value)}
+          />
+          <Button
+            variant="contained"
+            onClick={handleSavePalette}
+            disabled={userInput === "" ? true : false}
+          >
+            Save
+          </Button>
+        </Box>
+      </Modal>
       <Bar>
-        <IconButton color="inherit" edge="start">
-          {"<"}
-        </IconButton>
+        <Link to="/">
+          <ArrowBackIosNewIcon fontSize="large" />
+        </Link>
         <p>{colorsList.length} / 20</p>
-        <Button variant="contained" disabled={colorsList.length === 0}>
+        <Button
+          variant="contained"
+          disabled={colorsList.length === 0}
+          onClick={handleOpen}
+        >
           Save
         </Button>
       </Bar>

@@ -9,6 +9,7 @@ import { PalettesContext } from "./appContexts";
 import Palette from "./components/Palette";
 import Home from "./components/Home";
 import CreatePalette from "./components/CreatePalette";
+import SavePaletteForm from "./components/SavePaletteForm";
 
 function App() {
   const { palettesData } = useContext(PalettesContext);
@@ -18,6 +19,8 @@ function App() {
   const findPaletteById = (id) => {
     return palettesData.find((palette) => palette.id === id);
   };
+
+  // return <SavePaletteForm />;
 
   return (
     <AnimatePresence>

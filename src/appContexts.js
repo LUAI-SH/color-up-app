@@ -3,13 +3,15 @@ import react, { useState, useEffect } from "react";
 import palettes from "./model/palettes";
 // helper
 import { hexToHSL } from "./helperFunction/colors";
+// Hooks
+import useLocalStorageState from "./components/hooks/useLocalStorageState";
 
 // PalettesContext
 const PalettesContext = react.createContext();
 PalettesContext.displayName = "PalettesContext";
 
 function PalettesProvider(props) {
-  const [palettesData, setPalettesData] = useState([]);
+  const [palettesData, setPalettesData] = useLocalStorageState("palettes", []);
 
   useEffect(() => {
     let _appPalettes = palettes;

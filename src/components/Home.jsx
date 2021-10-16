@@ -20,7 +20,7 @@ const variants = {
       type: "spring",
     },
   },
-  initial: { opacity: 0, x: "50vw" },
+  initial: { opacity: 0, x: "-50vw" },
   exit: {
     x: "-100vw",
     opacity: 0,
@@ -52,9 +52,17 @@ const Home = () => {
       animate="visible"
       exit="exit"
     >
+      <NavBar>
+        <MaxWidth>
+          <Brand>Color Up</Brand>
+          <Items>
+            <Link to="/create-palette">Add Palette</Link>
+          </Items>
+        </MaxWidth>
+      </NavBar>
       <MaxWidth>
         <Snackbar
-          anchorOrigin={{ vertical: "top", horizontal: "right" }}
+          anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
           open={openSnackbar}
           message="Note archived"
         >
@@ -76,7 +84,6 @@ const Home = () => {
           </Alert>
         </Snackbar>
 
-        <H1>palettes</H1>
         <PaletteWrapper>
           {palettesData.map((palette) => {
             return (
@@ -109,7 +116,6 @@ const H1 = styled.h1`
 
 const Footer = styled.footer`
   margin-top: 6rem;
-  margin-bottom: 6rem;
   padding: 1rem;
   border-radius: 6px;
   background-color: black;
@@ -124,6 +130,7 @@ const Footer = styled.footer`
 `;
 
 const PaletteWrapper = styled.section`
+  margin-top: 2rem;
   display: grid;
   grid-template-columns: auto;
   grid-template-rows: auto;
@@ -156,12 +163,38 @@ const PaletteWrapper = styled.section`
 
 const MaxWidth = styled.div`
   max-width: 1050px;
+  padding: 0 2rem;
   margin: 0 auto;
 `;
 
+const Items = styled.section`
+  & a {
+    color: blue;
+    text-decoration: underline;
+  }
+`;
+const Brand = styled.section`
+  font-weight: 800;
+  font-size: 3.5rem;
+  text-transform: uppercase;
+`;
+
+const NavBar = styled.nav`
+  background-color: hsl(0deg, 0%, 90%);
+  height: 6rem;
+  display: flex;
+  align-items: center;
+  & > div {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+`;
+
 const Wrapper = styled(motion.main)`
-  padding: 2rem 5rem;
   height: 100%;
+  padding-bottom: 6rem;
   background: #efefbb; /* fallback for old browsers */
   background: linear-gradient(35deg, #f857a6, #ff5858);
 `;

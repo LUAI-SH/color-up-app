@@ -1,37 +1,22 @@
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import Modal from "@mui/material/Modal";
-
 import styled from "styled-components";
-import { IconButton, Button } from "@mui/material";
 
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import { HslColorPicker } from "react-colorful";
+import { IconButton, Button } from "@mui/material";
 
 import { hslToHex, hexToHSL } from "../helperFunction/colors";
 import DraggableColorsBox from "./DraggableColorsBox";
 
-import {Palette} from '../model/palette';
+import { Palette } from "../model/palette";
+
+import SaveModal from "./create-palette/SaveModal";
+import Drawer from "./create-palette/Drawer";
 
 // Context
 import { PalettesContext } from "../appContexts";
 // Hooks
 import useLocalStorageState from "./hooks/useLocalStorageState";
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
 
 const CreatePalette = () => {
   const { palettesData, setPalettesData } = useContext(PalettesContext);
@@ -41,29 +26,25 @@ const CreatePalette = () => {
     s: 32,
     l: 36,
   });
-  const [open, setOpen] = useState(false);
-  const [duplicateName, setDuplicateName] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  // const [duplicateName, setDuplicateName] = useState(false);
   const [userInput, setUserInput] = useState("");
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleOpen = () => setOpenModal(true);
 
   useEffect(() => {
-    if (colorsList.length !== 0) {
+    if (colorsList.length === 0) {
+      setColorsList(palettesData[0].colors.slice(0,8));
       return;
     }
-    if (palettesData.length !== 0) {
-      setColorsList(palettesData[0].colors);
-      return;
-    }
-  }, [palettesData, colorsList]);
+  }, []);
 
   const handleSavePalette = () => {
     const duplication = palettesData.filter(
       (palette) => palette.paletteName === userInput
     );
     if (duplication.length === 0) {
-     const newPalette = new Palette(userInput, colorsList);
-     setPalettesData([...palettesData, newPalette]);
+      const newPalette = new Palette(userInput, colorsList);
+      setPalettesData([...palettesData, newPalette]);
     }
   };
 
@@ -113,31 +94,15 @@ const CreatePalette = () => {
   }
 
   console.log("Re Rendered");
-  // return <p>dfvfdsvfdv</p>;
   return (
     <Wrapper>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <TextField
-            id="standard-basic"
-            label="Name"
-            variant="standard"
-            onChange={(e) => setUserInput(e.target.value)}
-          />
-          <Button
-            variant="contained"
-            onClick={handleSavePalette}
-            disabled={userInput === "" ? true : false}
-          >
-            Save
-          </Button>
-        </Box>
-      </Modal>
+      <SaveModal
+        input={userInput}
+        setInput={setUserInput}
+        open={openModal}
+        onClose={() => setOpenModal(!openModal)}
+        handleSave={handleSavePalette}
+      />
       <Bar>
         <Link to="/">
           <ArrowBackIosNewIcon fontSize="large" />
@@ -158,42 +123,22 @@ const CreatePalette = () => {
         />
       </Colors>
       <DrawerWrapper>
-        <Drawer>
-          <h2>🎨</h2>
-          <HslColorPicker
-            color={colorFromPicker}
-            onChange={setColorFromPicker}
-          />
-          <Button variant="contained" onClick={handleAddColor}>
-            Add Color
-          </Button>
-          <div>
-            <Button
-              variant="contained"
-              onClick={() => setColorsList([])}
-              disabled={colorsList.length === 0}
-            >
-              Clear Palette
-            </Button>
-            <Button variant="contained" onClick={handleAddRandomColor}>
-              Random Color
-            </Button>
-          </div>
-        </Drawer>
+        <Drawer
+          color={colorFromPicker}
+          setColor={setColorFromPicker}
+          addColor={handleAddColor}
+          colors={colorsList}
+          setColors={setColorsList}
+          addRandomColor={handleAddRandomColor}
+        />
       </DrawerWrapper>
     </Wrapper>
   );
 };
 
-const Drawer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-`;
-
 const DrawerWrapper = styled.section`
   background-color: hsl(0deg, 0%, 95%);
+  height: 100%;
   grid-area: drawer;
   order: 2;
 `;
@@ -223,7 +168,7 @@ const Wrapper = styled.div`
 
   @media only screen and (min-width: 678px) {
     display: grid;
-    grid-template-columns: 1fr 1fr 300px;
+    grid-template-columns: 1fr 1fr 25%;
     grid-template-rows: 60px 1fr 1fr;
     grid-template-areas:
       "Bar Bar drawer"
